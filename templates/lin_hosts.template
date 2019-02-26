@@ -1,0 +1,8 @@
+#@@app_name
+define host{ 
+use             generic-host
+host_name       @@ip 
+address         @@ip
+check_command   check-host-alive
+}
+

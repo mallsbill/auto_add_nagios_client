@@ -1,0 +1,10 @@
+# Turn rewrite engine on
+Options +FollowSymlinks
+RewriteEngine on
+#RewriteBase /register/
+#map neat URL to internal URL
+#RewriteRule me   NagiosController.php?action=register&ip=$1 [nc,qsa]
+RewriteRule ^me   NagiosController.php?action=register [nc,qsa]
+RewriteRule ^cleanup NagiosController.php?action=delete_down_hosts [nc,qsa]
+RewriteRule ^showall NagiosController.php?action=show_all [nc,qsa]
+RewriteRule ^deleteIp/([0-9,.]+) NagiosController.php?action=delete_ip&ip=$1 [nc,qsa] 
