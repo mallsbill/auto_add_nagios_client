@@ -9,3 +9,6 @@ Below REST API is created and exposed which will automatically register new inst
 2. https://<nagios_hostname>/register/showall - Display all registered instance on nagios server
 3. https://<nagios_hostname>/cleanup - Clean nagios host file for old and deleted instances. [Configurable]
 
+This repository is just one part of bigger Nagios monitoring solution. Please refer below link to read details about full solution.
+
+https://web-need.blogspot.com/2019/02/how-to-use-nagios-to-monitor-services.html
