@@ -2,7 +2,21 @@
 require_once("Config.php");
 
 class Common
-{ 
+{
+	// Met un hôte en downtime avant suppression
+	public static function set_host_downtime($host, $duration_min = 15) {
+		$now = time();
+		$end = $now + ($duration_min * 60);
+		$cmd = sprintf(
+			"printf '[%d] SCHEDULE_HOST_DOWNTIME;%s;%d;%d;1;0;auto_add_nagios_client;Auto downtime before deletion\\n' | sudo tee /usr/local/nagios/var/rw/nagios.cmd",
+			$now,
+			$host,
+			$now,
+			$end
+		);
+		exec($cmd);
+		var_dump("Downtime scheduled for host $host");
+	}
 	public static $hostgroup_file_path = "/usr/local/nagios/etc/hostgroups.cfg";
 	public static $allhosts_file_path = "/usr/local/nagios/etc/hosts-all.cfg";
 

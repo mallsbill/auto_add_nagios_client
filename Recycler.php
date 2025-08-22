@@ -34,7 +34,10 @@ class Recycler
 			{
 				array_push($arr_ip_to_delete,"'" . $ipObj['name'] . "'");
 				var_dump("removing ip " . $ipObj['name'] . "");
-				
+
+				// Mettre l'hôte en downtime avant suppression (15 min par défaut)
+				Common::set_host_downtime($ipObj['name'], 15);
+
 				$cmd_rm_from_hostgroup_with_comma="sed -i -e s/,*" . $ipObj['name'] . "[^0-9]/\",\"/ig " . Common::$hostgroup_file_path . "";
 				$cmd_rm_from_hostgroup_without_comma="sed -i -e s/" . $ipObj['name'] . "[^0-9]/\"\"/ig " . Common::$hostgroup_file_path . "";
 				$cmd_rm_starting_comma="sed -i -e /.*members/s/[^0-9],//ig " . Common::$hostgroup_file_path . "";
@@ -53,7 +56,6 @@ class Recycler
 				exec($cmd_rm_starting_comma);
 				//remove from hostgroup if IP is at the end of line
 				exec($cmd_rm_from_hostgroup_if_ip_is_last);
-			
 
 				var_dump("removing host definition from host file");
 				//remove host definition
@@ -65,7 +67,6 @@ class Recycler
 				//delete host defintion from host file
 				exec("sed -i '" . $sed_format_line_num_to_delete . "' " . Common::$allhosts_file_path . "");
 
-	
 				//restart nagios service
 				Common::restart_nagios();			
 			}
