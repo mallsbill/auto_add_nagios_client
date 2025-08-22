@@ -18,11 +18,11 @@ class Common
 		var_dump("Downtime scheduled for host $host");
 	}
 	public static $hostgroup_file_path = "/usr/local/nagios/etc/hostgroups.cfg";
-	public static $allhosts_file_path = "/usr/local/nagios/etc/hosts-all.cfg";
+	public static $allhosts_file_path = "/etc/check_mk/main.mk";
 
 
 	#public static $restart_service_command = "echo '' | /etc/init.d/nagios restart 2>&1";
-	public static $restart_service_command = "sudo /etc/init.d/nagios restart";
+	public static $restart_service_command = "sudo /usr/bin/cmk -I && sudo /usr/bin/cmk -R";
 	public static $region = "eu-west-1";
 
 
