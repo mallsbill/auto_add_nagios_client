@@ -38,12 +38,12 @@ class ConfigHandler
 		//add host in hosts file
 		if($inputXML->platform=="Linux")
 		{
-			var_dump("adding linux host in hosts-all.cfg");
+			var_dump("adding linux host in main.mk");
 			$template_file_path="/var/www/rest.com/public_html/templates/lin_hosts.template";
 		}
 		else
 		{
-			var_dump("adding windows host in hosts-all.cfg");
+			var_dump("adding windows host in main.mk");
 			$template_file_path="/var/www/rest.com/public_html/templates/win_hosts.template";
 		}
 
@@ -51,7 +51,10 @@ class ConfigHandler
 		$hostnode_text=str_replace("@@ip", $ip,$template_text);
 		$hostnode_text=str_replace("@@app_name", $app_name,$hostnode_text);
 		var_dump("hostnode $hostnode_text");
-		$ret_value=file_put_contents(Common::$allhosts_file_path,$hostnode_text,FILE_APPEND | FILE_USE_INCLUDE_PATH);
+		
+		$allhostfilecontent = file_get_contents(Common::$allhosts_file_path);
+		$allhostfilecontent = str_replace("##########AUTOMATIC_NAGIOS_ADDED_HOST###############", "##########AUTOMATIC_NAGIOS_ADDED_HOST###############\n".$hostnode_text, $allhostfilecontent);
+		$ret_value=file_put_contents(Common::$allhosts_file_path,$allhostfilecontent, FILE_USE_INCLUDE_PATH);
 
 		print_r("result of file write command ");
 	        var_dump($ret_value);
